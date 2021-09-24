@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 
-function MyButton({ children, ...props }) {
+function CustomButtom({ children, ...props }) {
   return <Button {...props}>{children}</Button>;
 }
 
-export default MyButton;
+export default CustomButtom;

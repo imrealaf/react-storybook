@@ -3,7 +3,7 @@ import red from "@mui/material/colors/red";
 
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
-export const defaultColorMode = "light";
+export const defaultColorMode = "dark";
 
 export const darkMode = {
   primary: {

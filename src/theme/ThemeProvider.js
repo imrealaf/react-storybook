@@ -1,10 +1,15 @@
 import { useState, useMemo } from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import { createTheme } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 
-import { ColorModeContext, defaultColorMode, darkMode, lightMode } from "./";
+import {
+  ColorModeContext,
+  defaultColorMode,
+  darkMode,
+  lightMode,
+} from "./mode";
 
-function ThemeWrapper({ children }) {
+function CustomThemeProvider({ children }) {
   const [mode, setMode] = useState(defaultColorMode);
 
   const colorMode = useMemo(
@@ -28,9 +33,12 @@ function ThemeWrapper({ children }) {
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+      </ThemeProvider>
     </ColorModeContext.Provider>
   );
 }
 
-export default ThemeWrapper;
+export default CustomThemeProvider;

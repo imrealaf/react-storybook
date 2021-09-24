@@ -1,11 +1,17 @@
 import { AppBar, Toolbar } from "@mui/material";
 
-function MyAppBar({ children, ...props }) {
+function CustomAppBar({ children, ...props }) {
   return (
-    <AppBar {...props}>
+    <AppBar
+      position="fixed"
+      sx={{
+        zIndex: "modal",
+      }}
+      {...props}
+    >
       <Toolbar>{children}</Toolbar>
     </AppBar>
   );
 }
 
-export default MyAppBar;
+export default CustomAppBar;
