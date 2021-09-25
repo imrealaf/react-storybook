@@ -1,9 +1,8 @@
 import { useContext } from "react";
 import { useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
+import { Box, Switch, FormControlLabel } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -11,19 +10,22 @@ import ListItemText from "@mui/material/ListItemText";
 
 import MailIcon from "@mui/icons-material/Mail";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
 import MenuIcon from "@mui/icons-material/Menu";
 
 import { ColorModeContext } from "theme";
-import { AppBar, ResponsiveDrawer } from "components";
-import { useToggle } from "hooks";
+import { AppBar, ResponsiveDrawer, Dropdown } from "components";
+import { usePopover, useToggle } from "hooks";
 import { vars } from "theme";
+
+import menu from "data/menu.json";
 
 function App() {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
   const drawer = useToggle();
+  const dropdown = usePopover();
+  const mode = theme.palette.mode;
+  const isDark = mode === "dark";
 
   return (
     <>
@@ -42,44 +44,30 @@ function App() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Material UI Theme
           </Typography>
-          <Box style={{ textTransform: "capitalize" }} sx={{ mr: 1 }}>
-            <Box
-              component="span"
-              sx={{
-                display: { xs: "none", sm: "inline-block" },
-                typography: "body2",
-              }}
-            >
-              <strong>{theme.palette.mode}</strong> Mode
+          <Dropdown iconBtn={true} {...dropdown}>
+            <Box py={2}>
+              <FormControlLabel
+                sx={{ pl: 2 }}
+                control={
+                  <Switch
+                    checked={isDark}
+                    onChange={colorMode.toggleColorMode}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                }
+                label="Dark mode"
+              />
             </Box>
-          </Box>
-          <IconButton color="inherit" onClick={colorMode.toggleColorMode}>
-            {theme.palette.mode === "dark" ? (
-              <Brightness7Icon />
-            ) : (
-              <Brightness4Icon />
-            )}
-          </IconButton>
+          </Dropdown>
         </AppBar>
-        <ResponsiveDrawer mobileOpen={drawer.open} mobileOnClose={drawer.hide}>
+        <ResponsiveDrawer open={drawer.open} onClose={drawer.hide}>
           <List>
-            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
+            {menu.map((item, index) => (
+              <ListItem button key={item.id}>
+                <ListItemIcon sx={{ color: "primary.main" }}>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                 </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary={item.title} />
               </ListItem>
             ))}
           </List>

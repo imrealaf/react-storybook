@@ -1,8 +1,13 @@
 import { AppBar, Toolbar } from "@mui/material";
+import { styled } from "@mui/system";
+
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  background: theme.palette.common.black,
+}));
 
 function CustomAppBar({ children, ...props }) {
   return (
-    <AppBar
+    <StyledAppBar
       position="fixed"
       sx={{
         zIndex: "modal",
@@ -10,7 +15,7 @@ function CustomAppBar({ children, ...props }) {
       {...props}
     >
       <Toolbar>{children}</Toolbar>
-    </AppBar>
+    </StyledAppBar>
   );
 }
 

@@ -1,35 +1,11 @@
-import { useState, useMemo } from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
-import {
-  ColorModeContext,
-  defaultColorMode,
-  darkMode,
-  lightMode,
-} from "./mode";
+import { ColorModeContext } from "./mode";
+import { useThemeWithModes } from "hooks";
 
 function CustomThemeProvider({ children }) {
-  const [mode, setMode] = useState(defaultColorMode);
-
-  const colorMode = useMemo(
-    () => ({
-      // The dark mode switch would invoke this method
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-      },
-    }),
-    []
-  );
-
-  const getDesignTokens = (mode) => ({
-    palette: {
-      mode,
-      ...(mode === "light" ? lightMode : darkMode),
-    },
-  });
-
-  const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+  const { theme, colorMode } = useThemeWithModes();
 
   return (
     <ColorModeContext.Provider value={colorMode}>

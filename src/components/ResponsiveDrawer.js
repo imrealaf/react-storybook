@@ -1,8 +1,13 @@
-import { Box, Divider, Drawer, Toolbar } from "@mui/material";
+import { Box, Drawer, SwipeableDrawer, Toolbar } from "@mui/material";
 
 import { vars } from "theme";
 
-function ResponsiveDrawer({ children, mobileOpen, mobileOnClose, ...props }) {
+function ResponsiveDrawer({
+  children,
+  onOpen = () => {},
+  onClose = () => {},
+  ...props
+}) {
   const container = document.body;
   const paperStyles = {
     boxSizing: "border-box",
@@ -12,7 +17,6 @@ function ResponsiveDrawer({ children, mobileOpen, mobileOnClose, ...props }) {
   const DrawerContent = () => (
     <Box>
       <Toolbar />
-      <Divider />
       {children}
     </Box>
   );
@@ -23,12 +27,12 @@ function ResponsiveDrawer({ children, mobileOpen, mobileOnClose, ...props }) {
       sx={{ width: { sm: vars.drawerWidth }, flexShrink: { sm: 0 } }}
       role="navigation"
     >
-      <Drawer
+      <SwipeableDrawer
         {...props}
         container={container}
         variant="temporary"
-        open={mobileOpen}
-        onClose={mobileOnClose}
+        onClose={onClose}
+        onOpen={onOpen}
         ModalProps={{
           keepMounted: true, // Better open performance on mobile.
         }}
@@ -38,9 +42,8 @@ function ResponsiveDrawer({ children, mobileOpen, mobileOnClose, ...props }) {
         }}
       >
         <DrawerContent />
-      </Drawer>
+      </SwipeableDrawer>
       <Drawer
-        {...props}
         variant="permanent"
         sx={{
           display: { xs: "none", sm: "block" },

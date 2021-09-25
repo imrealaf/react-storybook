@@ -1,12 +1,7 @@
-import ThemeWrapper from "theme/ThemeWrapper";
+import { muiTheme } from "storybook-addon-material-ui";
+import { theme } from "theme";
 
-export const decorators = [
-  // (Story) => (
-  //   <ThemeWrapper>
-  //     <Story />
-  //   </ThemeWrapper>
-  // ),
-];
+export const decorators = [muiTheme(theme)];
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
