@@ -1,34 +1,19 @@
-import { IconButton, Button, Popover } from "@mui/material";
-import MoreIcon from "@mui/icons-material/MoreVert";
+import PropTypes from "prop-types";
+import { Popover } from "@mui/material";
 
 function Dropdown({
   id,
   open,
   anchorEl,
-  show = () => {},
-  hide = () => {},
-  onClose = () => {},
-  btnText = "Dropdown",
-  btnColor = "inherit",
-  btnVariant = "text",
-  iconBtn = false,
-  icon = <MoreIcon />,
+  button,
   positionX = "left",
   positionY = "bottom",
+  hide = () => {},
   children,
-  ...props
 }) {
   return (
     <>
-      {iconBtn ? (
-        <IconButton color={btnColor} onClick={show}>
-          {icon}
-        </IconButton>
-      ) : (
-        <Button variant={btnVariant} color={btnColor} onClick={show}>
-          {btnText}
-        </Button>
-      )}
+      {button}
       <Popover
         id={id}
         open={open}
@@ -44,5 +29,16 @@ function Dropdown({
     </>
   );
 }
+
+Dropdown.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, null]),
+  open: PropTypes.bool,
+  anchorEl: PropTypes.oneOfType([PropTypes.element, null]),
+  button: PropTypes.node.isRequired,
+  positionX: PropTypes.string,
+  positionY: PropTypes.string,
+  hide: PropTypes.func,
+  children: PropTypes.node.isRequired,
+};
 
 export default Dropdown;

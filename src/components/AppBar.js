@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { AppBar, Toolbar } from "@mui/material";
 import { styled } from "@mui/system";
 
@@ -18,5 +19,9 @@ function CustomAppBar({ children, ...props }) {
     </StyledAppBar>
   );
 }
+
+CustomAppBar.propTypes = {
+  children: PropTypes.node,
+};
 
 export default CustomAppBar;

@@ -1,19 +1,17 @@
 import { useContext } from "react";
 import { useTheme } from "@mui/material/styles";
-import { Box, Switch, FormControlLabel } from "@mui/material";
+import { Box, Switch, FormControlLabel, ListSubheader } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
-import MailIcon from "@mui/icons-material/Mail";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MenuIcon from "@mui/icons-material/Menu";
+import MoreIcon from "@mui/icons-material/MoreVert";
 
 import { ColorModeContext } from "theme";
-import { AppBar, ResponsiveDrawer, Dropdown } from "components";
+import { AppBar, ResponsiveDrawer, Dropdown, Button } from "components";
 import { usePopover, useToggle } from "hooks";
 import { vars } from "theme";
 
@@ -44,7 +42,15 @@ function App() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Material UI Theme
           </Typography>
-          <Dropdown iconBtn={true} {...dropdown}>
+          <Button color="inherit">Some Link</Button>
+          <Dropdown
+            button={
+              <IconButton onClick={dropdown.show}>
+                <MoreIcon />
+              </IconButton>
+            }
+            {...dropdown}
+          >
             <Box py={2}>
               <FormControlLabel
                 sx={{ pl: 2 }}
@@ -61,12 +67,19 @@ function App() {
           </Dropdown>
         </AppBar>
         <ResponsiveDrawer open={drawer.open} onClose={drawer.hide}>
-          <List>
-            {menu.map((item, index) => (
+          <List
+            sx={{ mt: 1 }}
+            subheader={
+              <ListSubheader
+                component="div"
+                sx={{ backgroundColor: "inherit", color: "primary.main" }}
+              >
+                COMPONENTS
+              </ListSubheader>
+            }
+          >
+            {menu.components.map((item, index) => (
               <ListItem button key={item.id}>
-                <ListItemIcon sx={{ color: "primary.main" }}>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
                 <ListItemText primary={item.title} />
               </ListItem>
             ))}

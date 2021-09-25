@@ -1,4 +1,5 @@
-import { Box, Drawer, SwipeableDrawer, Toolbar } from "@mui/material";
+import PropTypes from "prop-types";
+import { Box, Drawer, SwipeableDrawer, Toolbar, useTheme } from "@mui/material";
 
 import { vars } from "theme";
 
@@ -8,10 +9,13 @@ function ResponsiveDrawer({
   onClose = () => {},
   ...props
 }) {
+  const theme = useTheme();
   const container = document.body;
   const paperStyles = {
     boxSizing: "border-box",
     width: vars.drawerWidth,
+    backgroundColor: theme.palette.grey[900],
+    backgroundImage: "none",
   };
 
   const DrawerContent = () => (
@@ -56,5 +60,11 @@ function ResponsiveDrawer({
     </Box>
   );
 }
+
+ResponsiveDrawer.propTypes = {
+  onOpen: PropTypes.func,
+  onClose: PropTypes.func,
+  children: PropTypes.node,
+};
 
 export default ResponsiveDrawer;
