@@ -10,11 +10,12 @@ function ResponsiveDrawer({
   ...props
 }) {
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   const container = document.body;
   const paperStyles = {
     boxSizing: "border-box",
     width: vars.drawerWidth,
-    backgroundColor: theme.palette.grey[900],
+    backgroundColor: isDark ? theme.palette.grey[900] : theme.palette.grey[300],
     backgroundImage: "none",
   };
 
